@@ -61,14 +61,14 @@ func calculateMaxCarsV1(parkingTickets []ParkingTicket) int {
 		if time.isStart {
 			counter += 1
 			totalArrivalChecked += 1
+			if maxCarsCount < counter {
+				maxCarsCount = counter
+			}
+			if totalArrivalChecked == totalTicketsCount {
+				break
+			}
 		} else {
 			counter -= 1
-		}
-		if maxCarsCount < counter {
-			maxCarsCount = counter
-		}
-		if totalArrivalChecked == totalTicketsCount {
-			break
 		}
 	}
 	return maxCarsCount
