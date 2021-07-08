@@ -1,8 +1,8 @@
 build:
-	go build ./app.go
+	go build ./cmd/main.go
 
 run:
-	go run ./app.go
+	go run ./cmd/main.go
 
 test:
-	go test ./app_test.go ./app.go
+	go test -v ./internal

@@ -1,44 +1,24 @@
-package main
+package parking
 
 import "sort"
 
-func main() {
-	parkingTickets := []ParkingTicket{
-		{"09:00", "10:08"},
-		{"10:20", "11:35"},
-		{"12:00", "17:00"},
-		{"11:00", "11:30"},
-		{"11:20", "12:30"},
-		{"11:30", "18:15"},
+func CalculateMaxCarsV1(parkingTickets []Ticket) int {
+	type tempState struct {
+		time    string
+		isStart bool
 	}
 
-	maxCarsCount := calculateMaxCarsV1(parkingTickets)
-
-	println("Max count of cars on ParkingTicket is ", maxCarsCount)
-}
-
-type tempState struct {
-	time    string
-	isStart bool
-}
-
-type ParkingTicket struct {
-	start string
-	end   string
-}
-
-func calculateMaxCarsV1(parkingTickets []ParkingTicket) int {
 	totalTicketsCount := len(parkingTickets)
 
 	var states []tempState
 
 	for _, parking := range parkingTickets {
 		states = append(states, tempState{
-			parking.start,
+			parking.Start,
 			true,
 		})
 		states = append(states, tempState{
-			parking.end,
+			parking.End,
 			false,
 		})
 	}
