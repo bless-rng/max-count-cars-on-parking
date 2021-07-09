@@ -6,3 +6,6 @@ run:
 
 test:
 	go clean -testcache && go test -v ./internal
+
+bench:
+	go test -bench=... ./...

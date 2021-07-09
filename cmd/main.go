@@ -14,7 +14,7 @@ func main() {
 		{"11:30", "18:15"},
 	}
 
-	maxCarsCount := parking.CalculateMaxCarsV1(&parkingTickets)
+	maxCarsCount :=  parking.CalculateMaxCarsV3(parkingTickets)
 
 	println("Max count of cars on ParkingTicket is ", maxCarsCount)
 }
