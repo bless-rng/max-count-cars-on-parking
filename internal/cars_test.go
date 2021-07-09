@@ -47,7 +47,7 @@ func getTestData() (parkingTickets []Ticket, expected int) {
 		{"01:00","23:59"},
 		{"00:58","02:00"},
 	}, 5
-	repeatTimes := 15
+	repeatTimes := 150
 	var resultTickets []Ticket
 	for i := 0; i < repeatTimes; i++ {
 		resultTickets = append(resultTickets, tickets...)
