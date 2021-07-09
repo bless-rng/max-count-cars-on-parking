@@ -14,7 +14,12 @@ func main() {
 		{"11:30", "18:15"},
 	}
 
-	maxCarsCount := parking.CalculateMaxCarsV1(&parkingTickets)
+	maxCarsCount := 0
+	if len(parkingTickets) >= 150 {
+		maxCarsCount = parking.CalculateCarsByArray(parkingTickets)
+	} else {
+		maxCarsCount = parking.CalculateMaxCarsV1(parkingTickets)
+	}
 
 	println("Max count of cars on ParkingTicket is ", maxCarsCount)
 }

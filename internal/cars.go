@@ -57,7 +57,7 @@ func CalculateMaxCarsV1(parkingTickets []Ticket) int {
 
 
 func CalculateCarsByArray(parkingTickets []Ticket) int {
-	day := make([]int, 31*60*24)
+	day := make([]int, 60*24)
 	start, end := 0 ,0
 	for i:=0; i<len(parkingTickets); i++ {
 		start, end = parseTicketTimes(parkingTickets[i])
