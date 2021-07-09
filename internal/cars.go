@@ -12,7 +12,7 @@ func CalculateMaxCarsV1(parkingTickets []Ticket) int {
 
 	totalTicketsCount := len(parkingTickets)
 
-	var states []tempState
+	states := make([]tempState, 0, totalTicketsCount*2)
 
 	for i := range parkingTickets {
 		states = append(states, tempState{&parkingTickets[i].Start,true}, tempState{&parkingTickets[i].End, false})
