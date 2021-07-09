@@ -4,21 +4,21 @@ import (
 	"sort"
 )
 
-func CalculateMaxCarsV1(parkingTickets []Ticket) int {
+func CalculateMaxCarsV1(parkingTickets *[]Ticket) int {
 	type tempState struct {
 		time    *string
 		isStart bool
 	}
 
-	totalTicketsCount := len(parkingTickets)
+	totalTicketsCount := len(*parkingTickets)
 
 	states := make([]tempState, totalTicketsCount*2, totalTicketsCount*2)
 
 	j := 0
-	for i := range parkingTickets {
-		states[j] = tempState{&parkingTickets[i].Start, true}
+	for i := range *parkingTickets {
+		states[j] = tempState{&(*parkingTickets)[i].Start, true}
 		j++
-		states[j] = tempState{&parkingTickets[i].End, false}
+		states[j] = tempState{&(*parkingTickets)[i].End, false}
 		j++
 	}
 	sort.Slice(states, func(i, j int) bool {
