@@ -56,7 +56,7 @@ func CalculateMaxCarsV1(parkingTickets []Ticket) int {
 }
 
 
-func CalculateCarsByArray(parkingTickets []Ticket) int {
+func CalculateMaxCarsV2(parkingTickets []Ticket) int {
 	day := make([]int, 60*24)
 	start, end := 0 ,0
 	for i:=0; i<len(parkingTickets); i++ {
@@ -79,4 +79,36 @@ func parseTicketTimes(ticket Ticket) (from int,to int) {
 	endMinutes, _ := strconv.Atoi(ticket.End[3:])
 
 	return startHours* 60 + startMinutes, endHours * 60 + endMinutes
+}
+
+func CalculateMaxCarsV3(parkingTickets []Ticket) int {
+
+	in := make([]int, 24*60)
+	out := make([]int, 24*60)
+
+	for i := 0; i < len(parkingTickets); i++ {
+		start, end := parseTicketTimes(parkingTickets[i])
+		in[start]++
+		out[end]++
+	}
+
+	maxCarsCount := 0
+	counter := 0
+	totalArrivalChecked := 0
+	for i := 0; i < len(in); i++ {
+		if in[i] > 0 {
+			counter += in[i]
+			totalArrivalChecked += in[i]
+			if maxCarsCount < counter {
+				maxCarsCount = counter
+			}
+			if totalArrivalChecked == len(parkingTickets) {
+				break
+			}
+		}
+		if out[i] > 0 {
+			counter -= out[i]
+		}
+	}
+	return maxCarsCount
 }
