@@ -12,10 +12,14 @@ func CalculateMaxCarsV1(parkingTickets []Ticket) int {
 
 	totalTicketsCount := len(parkingTickets)
 
-	states := make([]tempState, 0, totalTicketsCount*2)
+	states := make([]tempState, totalTicketsCount*2, totalTicketsCount*2)
 
+	j := 0
 	for i := range parkingTickets {
-		states = append(states, tempState{&parkingTickets[i].Start,true}, tempState{&parkingTickets[i].End, false})
+		states[j] = tempState{&parkingTickets[i].Start, true}
+		j++
+		states[j] = tempState{&parkingTickets[i].End, false}
+		j++
 	}
 	sort.Slice(states, func(i, j int) bool {
 		firstTime := states[i]
