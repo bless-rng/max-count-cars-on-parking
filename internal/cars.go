@@ -1,8 +1,8 @@
 package parking
 
 import (
+	"fmt"
 	"sort"
-	"strconv"
 )
 
 func CalculateMaxCarsV1(parkingTickets []Ticket) int {
@@ -59,8 +59,10 @@ func CalculateMaxCarsV1(parkingTickets []Ticket) int {
 func CalculateMaxCarsV2(parkingTickets []Ticket) int {
 	day := make([]int, 60*24)
 	start, end := 0 ,0
+	timeMap := getTimeMap()
 	for i:=0; i<len(parkingTickets); i++ {
-		start, end = parseTicketTimes(parkingTickets[i])
+		start = timeMap[parkingTickets[i].Start]
+		end = timeMap[parkingTickets[i].End]
 		for start <= end {
 			day[start]++
 			start++
@@ -71,23 +73,15 @@ func CalculateMaxCarsV2(parkingTickets []Ticket) int {
 	return day[len(day) - 1]
 }
 
-func parseTicketTimes(ticket Ticket) (from int,to int) {
-	startHours, _ := strconv.Atoi(ticket.Start[0:2])
-	startMinutes, _ := strconv.Atoi(ticket.Start[3:])
-
-	endHours, _ := strconv.Atoi(ticket.End[0:2])
-	endMinutes, _ := strconv.Atoi(ticket.End[3:])
-
-	return startHours* 60 + startMinutes, endHours * 60 + endMinutes
-}
-
 func CalculateMaxCarsV3(parkingTickets []Ticket) int {
-
+	timeMap := getTimeMap()
 	in := make([]int, 24*60)
 	out := make([]int, 24*60)
 
+	start, end := 0,0
 	for i := 0; i < len(parkingTickets); i++ {
-		start, end := parseTicketTimes(parkingTickets[i])
+		start = timeMap[parkingTickets[i].Start]
+		end = timeMap[parkingTickets[i].End]
 		in[start]++
 		out[end]++
 	}
@@ -111,4 +105,14 @@ func CalculateMaxCarsV3(parkingTickets []Ticket) int {
 		}
 	}
 	return maxCarsCount
+}
+
+func getTimeMap() map[string]int {
+	timeMap := make(map[string]int)
+	for h:=0; h<24; h++ {
+		for m:=0; m<60; m++ {
+			timeMap[fmt.Sprintf("%.2d:%.2d", h, m)] = h*60+m
+		}
+	}
+	return timeMap
 }
