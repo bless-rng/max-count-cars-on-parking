@@ -1,35 +1,30 @@
 package parking
 
-import "sort"
+import (
+	"sort"
+)
 
 func CalculateMaxCarsV1(parkingTickets []Ticket) int {
 	type tempState struct {
-		time    string
+		time    *string
 		isStart bool
 	}
 
 	totalTicketsCount := len(parkingTickets)
 
-	var states []tempState
+	states := make([]tempState, 0, totalTicketsCount*2)
 
-	for _, parking := range parkingTickets {
-		states = append(states, tempState{
-			parking.Start,
-			true,
-		})
-		states = append(states, tempState{
-			parking.End,
-			false,
-		})
+	for i := range parkingTickets {
+		states = append(states, tempState{&parkingTickets[i].Start,true}, tempState{&parkingTickets[i].End, false})
 	}
 	sort.Slice(states, func(i, j int) bool {
 		firstTime := states[i]
 		secondTime := states[j]
-		if firstTime.time < secondTime.time {
+		if *firstTime.time < *secondTime.time {
 			return true
 		}
-		if firstTime.time == secondTime.time {
-			return firstTime.isStart == true
+		if *firstTime.time == *secondTime.time {
+			return firstTime.isStart
 		}
 		return false
 	})
